@@ -28,6 +28,11 @@ public class personalBoardController {
 
     }
 
+    @GetMapping("/index")
+    public void sampleIndex(){
+
+    }
+
     @GetMapping("/register")
     public void register(){
 
