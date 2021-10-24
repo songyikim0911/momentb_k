@@ -13,6 +13,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.ui.Model;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @SpringBootTest
 @Log4j2
 public class PersonalBoardRepositoryTests {
@@ -24,6 +28,25 @@ public class PersonalBoardRepositoryTests {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Test
+    public void testInsert(){
+        IntStream.rangeClosed(1,100).forEach(i->{
+
+            Set<String> tags = IntStream.rangeClosed(1,3).mapToObj(j->i+"_tag"+j).collect(Collectors.toSet());
+
+        PersonalBoard personalBoard = PersonalBoard.builder()
+                .pbContent("sample....."+i)
+                .memId("user"+i)
+                .tags(tags)
+                .build();
+
+        personalBoardRepository.save(personalBoard);
+
+        });
+
+
+
+    }
 
     @Test
     public void testSearch1(){

@@ -4,13 +4,13 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 @Entity
+@Table(name="personal_board")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +36,9 @@ public class PersonalBoard {
         this.pbContent = pbContent;
     }
 
+    @ElementCollection
+    @CollectionTable(name="personal_board_tags")
+    private Set<String> tags;
 
 
 }
