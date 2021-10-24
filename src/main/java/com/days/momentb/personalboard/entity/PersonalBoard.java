@@ -1,11 +1,13 @@
 package com.days.momentb.personalboard.entity;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"tags"})
 public class PersonalBoard {
 
     @Id
@@ -36,9 +38,12 @@ public class PersonalBoard {
         this.pbContent = pbContent;
     }
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name="personal_board_tags")
-    private Set<String> tags;
+    @Fetch(value = FetchMode.JOIN)
+    @BatchSize(size = 50)
+    @Builder.Default
+    private Set<String> tags = new HashSet<>();
 
 
 }
