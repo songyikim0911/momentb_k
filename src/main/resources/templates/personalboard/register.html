@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="layout/layout">
 <head>
+
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
@@ -9,7 +10,7 @@
 
 
 <div layout:fragment="content">
-
+    <link rel="stylesheet" th:href="@{/assets/css/canvasstyle.css}">
     <section id="breadcrumbs" class="breadcrumbs">
         <div class="container">
 
@@ -44,7 +45,23 @@
                     <span contenteditable="true" type="text"  class="form-control tagInput" ></span>
                 </div>
 
+                <!--그림판시작-->
+                <canvas id="jsCanvas" class="canvas"></canvas>
+                <div class="controls"> <div class="controls_range">
+                    <input type="range" id="jsRange" min="0.1" max="5.0" value="2.5" step="0.1" /> </div>
+                    <div class="controls_btns"> <button id="jsMode">Fill</button>
+                        <button id="jsSave">Save</button> </div>
+                    <div class="controls_colors" id="jsColors">
+                        <div class="controls_color jsColor" style="background-color: #2c2c2c;"></div>
+                        <div class="controls_color jsColor" style="background-color: white;"></div>
+                        <div class="controls_color jsColor" style="background-color: #FF3B30;"></div>
+                        <div class="controls_color jsColor" style="background-color: #ff9500;"></div>
+                        <div class="controls_color jsColor" style="background-color: #4cd963;"></div>
+                        <div class="controls_color jsColor" style="background-color: #5ac8fa;"></div>
+                        <div class="controls_color jsColor" style="background-color: #0579ff;"></div>
+                        <div class="controls_color jsColor" style="background-color: #5856d6;"></div> </div> </div>
 
+                <!--그림판 끝-->
                 <div class="my-4">
                     <div class="float-end hiddens">
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -55,11 +72,10 @@
         </div>
     </div>
 
-
-
 <th:block  layout:fragment="script">
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/assets/js/canvasapp.js}"></script>
     <script th:inline="javascript">
 
 
@@ -83,6 +99,63 @@
             document.querySelector("form").submit()
 
         },false)
+
+
+        const canvas = document.querySelector('.canvas');
+        const context = canvas.getContext('2d');
+        const control = document.querySelector('.control');
+        const saveBtn = document.querySelector('.save-btn');
+        const resultImage = document.querySelector('.result-image');
+        let drawingMode; // true일 때만 그리기
+        let brush = 'color'; // 'color', 'image'
+        let colorVal = 'black'; // 색상
+
+        const imgElem = new Image();
+        imgElem.src = '.https://tistory1.daumcdn.net/tistory/0/MobileWeb/images/ilbuni2.png';
+
+        function downHandler() {
+            drawingMode = true;
+        }
+
+        function upHandler() {
+            drawingMode = false;
+        }
+
+        function moveHandler(이벤트) {
+            if (!drawingMode) return;
+
+            switch (brush) {
+                case 'color':
+                    context.beginPath();
+                    context.arc(이벤트.layerX, 이벤트.layerY, 10, 0, Math.PI*2, false);
+                    context.fill();
+                    break;
+                case 'image':
+                    context.drawImage(imgElem, 이벤트.layerX, 이벤트.layerY, 50, 50);
+                    break;
+            }
+        }
+
+        function setColor(이벤트) {
+            brush = 이벤트.target.getAttribute('data-type');
+            colorVal = 이벤트.target.getAttribute('data-color');
+            context.fillStyle = colorVal;
+            console.log(brush);
+        }
+
+        function createImage(){
+            const url = canvas.toDataURL('image/png');
+            console.log(url);
+            const imgElem = new Image();
+            imgElem.src = url;
+            resultImage.appendChild(imgElem);
+        }
+
+        canvas.addEventListener('mousedown', downHandler);
+        canvas.addEventListener('mousemove', moveHandler);
+        canvas.addEventListener('mouseup', upHandler);
+        control.addEventListener('click', setColor);
+        saveBtn.addEventListener('click', createImage);
 
         </script>
 
