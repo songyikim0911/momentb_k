@@ -71,7 +71,7 @@ public class UploadController {
 				//섬네일 파일 이름은 중간에 s_로 시작하도록
 				File thumbnailFile = new File(thumbnailSaveName);
 				//섬네일 생성
-				Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile,100,100 );
+				Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile,405,335 );
 				resultDTOList.add(new PersonalBoardPictureDTO(uuid, fileName, folderPath, false));
 
 			} catch (IOException e) {

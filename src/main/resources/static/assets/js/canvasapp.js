@@ -60,8 +60,11 @@ function handleCM(event){
 function handleSaveClick(){
     const image = canvas.toDataURL();
     const link = document.createElement("a");
+
+
+
     link.href=image;
-    link.download ="PaintJS[🎨]"; link.click(); }
+    link.download ="handwriting"; link.click(); }
 
 if(canvas){
     canvas.addEventListener("mousemove" , onMouseMove);

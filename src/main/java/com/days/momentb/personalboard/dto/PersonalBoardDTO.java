@@ -31,6 +31,6 @@ public class PersonalBoardDTO {
 
     private List<String> tags;
 
-    private List<String> pictures;
+    private List<PersonalBoardPictureDTO> pictures;
 
 }
