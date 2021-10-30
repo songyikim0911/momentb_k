@@ -21,7 +21,9 @@ public class PersonalBoardPictureDTO {
         return savePath+"/s_"+uuid+"_"+fileName;
     }
 
-
+    public String getHandWritingLink(){
+        return savePath+"/h_"+uuid+"_"+fileName;
+    }
 
 
 }
