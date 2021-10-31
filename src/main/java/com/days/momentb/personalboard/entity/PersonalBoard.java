@@ -3,12 +3,11 @@ package com.days.momentb.personalboard.entity;
 import lombok.*;
 import org.hibernate.annotations.*;
 
-import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString(exclude = {"tags","pictures"})
+@ToString(exclude = {"tags","pictures","locations"})
 public class PersonalBoard {
 
     @Id
@@ -51,6 +50,15 @@ public class PersonalBoard {
     @Fetch(value = FetchMode.JOIN)
     @BatchSize(size = 50)
     private Set<PersonalBoardPicture> pictures;
+
+
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name="personal_board_location")
+    @Fetch(value = FetchMode.JOIN)
+    @BatchSize(size = 50)
+    private Set<PersonalBoardLocation> locations;
+
 
 
 

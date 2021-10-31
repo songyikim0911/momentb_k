@@ -36,7 +36,7 @@ public class UploadController {
 	private String uploadPath;
 
 	@PostMapping("/uploadAjax")
-	public ResponseEntity<List<PersonalBoardPictureDTO>> uploadFile(MultipartFile[] uploadFiles){
+	public ResponseEntity<List<PersonalBoardPictureDTO>> uploadFile(@RequestParam(value="file", required=true)MultipartFile[] uploadFiles){
 
 		List<PersonalBoardPictureDTO> resultDTOList = new ArrayList<>();
 

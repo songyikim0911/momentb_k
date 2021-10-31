@@ -64,7 +64,7 @@ function handleSaveClick() {
     const imgBase64 = canvas.toDataURL('image/jpeg', 'image/octet-stream');
     const decodImg = atob(imgBase64.split(',')[1]);
 
-    console.log(imgBase64)
+    console.log("imgBase64"+imgBase64)
 
     let array = [];
     for (let i = 0; i < decodImg.length; i++) {
