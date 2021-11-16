@@ -15,6 +15,8 @@ public class PersonalBoardPictureDTO {
 
     private String savePath;
 
+    private String imageLabel;
+
     private boolean selfDrawing;
 
     public String getLink(){
@@ -24,6 +26,9 @@ public class PersonalBoardPictureDTO {
     public String getHandWritingLink(){
         return savePath+"/h_"+uuid+"_"+fileName;
     }
+
+
+
 
 
 }

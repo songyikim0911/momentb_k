@@ -3,11 +3,12 @@ package com.days.momentb.personalboard.entity;
 import lombok.*;
 import org.hibernate.annotations.*;
 
+import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity

@@ -28,11 +28,6 @@ public class personalBoardController {
 
     }
 
-    @GetMapping("/index")
-    public void sampleIndex(){
-
-    }
-
     @GetMapping("/register")
     public void register(){
 
@@ -40,7 +35,9 @@ public class personalBoardController {
 
     @PostMapping("/register")
     public String registerPost(PersonalBoardDTO personalBoardDTO, RedirectAttributes redirectAttributes){
-
+        log.info("--controoller");
+        log.info(personalBoardDTO.getPictures());
+        log.info(personalBoardDTO.getLocations());
         Long pbNo = personalBoardService.register(personalBoardDTO);
 
         redirectAttributes.addFlashAttribute("",pbNo);

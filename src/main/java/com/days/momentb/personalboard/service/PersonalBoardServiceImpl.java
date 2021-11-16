@@ -4,6 +4,7 @@ import com.days.momentb.common.dto.PageRequestDTO;
 import com.days.momentb.common.dto.PageResponseDTO;
 import com.days.momentb.personalboard.dto.PersonalBoardDTO;
 import com.days.momentb.personalboard.entity.PersonalBoard;
+import com.days.momentb.personalboard.entity.PersonalBoardLocation;
 import com.days.momentb.personalboard.repository.PersonalBoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -30,9 +31,16 @@ public class PersonalBoardServiceImpl implements PersonalBoardService{
     @Override
     public Long register(PersonalBoardDTO personalBoardDTO) {
         //1.dto->vo
+        log.info(personalBoardDTO.getLocations());
+        log.info(personalBoardDTO.getPictures());
+
         PersonalBoard personalBoard = modelMapper.map(personalBoardDTO, PersonalBoard.class);
+
+        log.info(personalBoard.getLocations());
+        log.info(personalBoard.getPictures());
         //2.insert
         personalBoardRepository.save(personalBoard);
+
         return personalBoard.getPbNo();
     }
 

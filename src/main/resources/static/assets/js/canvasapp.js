@@ -28,15 +28,15 @@ function onMouseMove(event){
         ctx.beginPath(); //경로 생성
         ctx.moveTo(x, y); //선 시작 좌표
     }else{ //console.log("creating line in" , x ,y);
-         ctx.lineTo(x, y); //선 끝 좌표
-         ctx.stroke(); //선 그리기
+        ctx.lineTo(x, y); //선 끝 좌표
+        ctx.stroke(); //선 그리기
         // ctx.closePath(); //현대미술같은 선들..
-        }
+    }
 }
 function handleColorClick(event) {
-        const color = event.target.style.backgroundColor;
-        ctx.strokeStyle = color;
-        ctx.fillStyle = color; }
+    const color = event.target.style.backgroundColor;
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color; }
 
 function handleRangeChange(event){
     const size = event.target.value;
@@ -48,7 +48,7 @@ function handleModeClick(){
         filling=false; mode.innerText="FILL";
     }
     else{
-    filling =true; mode.innerText="PAINT"
+        filling =true; mode.innerText="PAINT"
     }
 }
 
@@ -64,7 +64,7 @@ function handleSaveClick() {
     const imgBase64 = canvas.toDataURL('image/jpeg', 'image/octet-stream');
     const decodImg = atob(imgBase64.split(',')[1]);
 
-    console.log("imgBase64"+imgBase64)
+    console.log(imgBase64)
 
     let array = [];
     for (let i = 0; i < decodImg.length; i++) {
@@ -84,9 +84,9 @@ function handleSaveClick() {
 
         const response = await axios.post('/uploadCanvas', formData,
             {cache: false,
-            processData: false,
+                processData: false,
                 data:formData,
-            contentType: false}
+                contentType: false}
         )
         const data = response.data
 
@@ -116,9 +116,9 @@ function showUploadCanvas(arr){
         var fileCallPath =  encodeURIComponent( obj.savePath+ "/h_"+obj.uuid +"_"+obj.fileName)
 
         str +=
-            `<li data-path=${obj.savePath} data-uuid=${obj.uuid} data-filename=${obj.fileName} data-selfdrawing="true"><div>
+            `<li data-path=${obj.savePath} data-uuid=${obj.uuid} data-filename=${obj.fileName} data-imageLabel="${obj.imageLabel}" data-selfdrawing="true"><div>
                   <span>${obj.fileName}</span>
-                 <button type='button' data-file=${fileCallPath} data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>
+                 <button type='button'  data-file=${fileCallPath} data-imagelabel="handwriting" data-type='image' class='btn btn-warning btn-circle'><i class='fa fa-times'></i></button><br>
                  <img src='/display?fileName=${fileCallPath}'>
                  </div>
                  </li>`
@@ -141,15 +141,15 @@ if(canvas){
     canvas.addEventListener("contextmenu",handleCM)
 }
 
-    Array.from(colors).forEach(color => color.addEventListener("click",handleColorClick));
+Array.from(colors).forEach(color => color.addEventListener("click",handleColorClick));
 
-    if(range){
-        range.addEventListener("input",handleRangeChange);
-    }
-    if(mode){
-        mode.addEventListener("click",handleModeClick);
-    }
-    if(saveBtn){
+if(range){
+    range.addEventListener("input",handleRangeChange);
+}
+if(mode){
+    mode.addEventListener("click",handleModeClick);
+}
+if(saveBtn){
     saveBtn.addEventListener("click",handleSaveClick);
-    }
+}
 

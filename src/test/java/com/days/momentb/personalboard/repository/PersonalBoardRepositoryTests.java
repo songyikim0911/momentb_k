@@ -2,7 +2,6 @@ package com.days.momentb.personalboard.repository;
 
 import com.days.momentb.personalboard.dto.PersonalBoardDTO;
 import com.days.momentb.personalboard.entity.PersonalBoard;
-import com.days.momentb.personalboard.entity.PersonalBoardPicture;
 import com.days.momentb.personalboard.service.PersonalBoardService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,6 @@ import org.springframework.ui.Model;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -39,31 +37,17 @@ public class PersonalBoardRepositoryTests {
 
     @Test
     public void testInsert(){
-
-
-
         IntStream.rangeClosed(1,100).forEach(i->{
 
             Set<String> tags = IntStream.rangeClosed(1,3).mapToObj(j->i+"_tag"+j).collect(Collectors.toSet());
 
-            Set<PersonalBoardPicture> pictures = IntStream.rangeClosed(1,3).mapToObj(j->{
-                PersonalBoardPicture picture = PersonalBoardPicture.builder()
-                        .uuid(UUID.randomUUID().toString())
-                        .savePath("20021/10/18")
-                        .fileName("img"+j+".jpg")
-                        .build();
-                return picture;
-            }).collect(Collectors.toSet());
+            PersonalBoard personalBoard = PersonalBoard.builder()
+                    .pbContent("sample....."+i)
+                    .memId("user"+i)
+                    .tags(tags)
+                    .build();
 
-
-        PersonalBoard personalBoard = PersonalBoard.builder()
-                .pbContent("sample....."+i)
-                .memId("user"+i)
-                .tags(tags)
-                .pictures(pictures)
-                .build();
-
-        personalBoardRepository.save(personalBoard);
+            personalBoardRepository.save(personalBoard);
 
         });
 
@@ -113,8 +97,8 @@ public class PersonalBoardRepositoryTests {
 
     }
 
-   @Test
-   public void testSelectOne2(){
+    @Test
+    public void testSelectOne2(){
         Long pbNo = 1L;
 
         Optional<PersonalBoard> optionalPersonalBoard = personalBoardRepository.findById(pbNo);
@@ -125,15 +109,15 @@ public class PersonalBoardRepositoryTests {
 
         log.info(dto);
 
-   }
+    }
 
-   @Transactional(readOnly = true)
-   @Test
-   public void read(){
+    @Transactional(readOnly = true)
+    @Test
+    public void read(){
         Long pbNo = 1L;
         PersonalBoardDTO dto = personalBoardService.read(pbNo);
         log.info(dto);
-   }
+    }
 
     @Test
     public void testSearch1(){
@@ -149,7 +133,7 @@ public class PersonalBoardRepositoryTests {
 
             PersonalBoardDTO personalBoardDTO = modelMapper.map(personalBoard, PersonalBoardDTO.class);
 
-          log.info(personalBoardDTO);
+            log.info(personalBoardDTO);
 
         });
 
